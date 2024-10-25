@@ -1,0 +1,8 @@
+{"level":"info","ts":1729885469.556879,"msg":"Attempting to connect","device":"Modbus1","address":"192.168.1.64:502"}
+{"level":"info","ts":1729885469.566197,"msg":"Connected successfully","device":"Modbus1"}
+{"level":"info","ts":1729885471.5761092,"msg":"Read registers","device":"Modbus1","data":"\u0000d\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"}
+{"level":"info","ts":1729885473.575666,"msg":"Read registers","device":"Modbus1","data":"\u0000d\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"}
+{"level":"info","ts":1729885475.576194,"msg":"Read registers","device":"Modbus1","data":"\u0000d\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"}
+{"level":"info","ts":1729885477.576189,"msg":"Read registers","device":"Modbus1","data":"\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"}
+{"level":"info","ts":1729885479.647636,"msg":"Read registers","device":"Modbus1","data":"\u0000d\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"}
+{"level":"info","ts":1729885481.745274,"msg":"Read registers","device":"Modbus1","data":"\u0000C\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"}
