@@ -1,7 +1,8 @@
 package main
 
 import (
-	"github.com/goburrow/modbus"
+	"GServer/devices"
+	_ "github.com/goburrow/modbus"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"os"
@@ -25,33 +26,25 @@ func setupLogger() *zap.Logger {
 	return logger
 }
 
-func queryDevice(name, address string, slaveID byte, interval time.Duration, logger *zap.Logger) {
+func queryDevice(device devices.ModbusDevice, name, address string, slaveID byte, interval time.Duration, logger *zap.Logger) {
 	for {
-		handler := modbus.NewTCPClientHandler(address)
-		handler.SlaveId = slaveID // Установка Slave ID
-		logger.Info("Attempting to connect", zap.String("device", name), zap.String("address", address))
-
-		err := handler.Connect()
+		err := device.Connect(address, slaveID)
 		if err != nil {
 			logger.Warn("Failed to connect", zap.String("device", name), zap.Error(err))
-			handler.Close() // Убедитесь, что соединение закрыто при неудаче
 			time.Sleep(5 * time.Second)
 			continue
 		}
 		logger.Info("Connected successfully", zap.String("device", name))
 
-		client := modbus.NewClient(handler)
-		defer handler.Close()
-
 		ticker := time.NewTicker(interval)
 		for range ticker.C {
-			results, err := client.ReadHoldingRegisters(0, 10)
+			data, err := device.ReadData()
 			if err != nil {
-				logger.Error("Failed to read registers", zap.String("device", name), zap.Error(err))
-				handler.Close()
+				logger.Error("Failed to read data", zap.String("device", name), zap.Error(err))
+				device.Disconnect()
 				break
 			} else {
-				logger.Info("Read registers", zap.String("device", name), zap.ByteString("data", results))
+				logger.Info("Data read", zap.String("device", name), zap.ByteString("data", data))
 			}
 		}
 	}
@@ -61,9 +54,11 @@ func main() {
 	logger := setupLogger()
 	defer logger.Sync()
 
-	// Укажите адреса, порты и Slave ID для каждого устройства
-	go queryDevice("Modbus1", "192.168.1.64:502", 1, 2*time.Second, logger) // Slave ID 1
-	//go queryDevice("Modbus2", "192.168.1.65:502", 2, 5*time.Second, logger) // Slave ID 2
+	deviceA := &devices.DeviceTypeA{}
+	deviceB := &devices.DeviceTypeB{}
+
+	go queryDevice(deviceA, "DeviceA", "192.168.1.64:502", 1, 2*time.Second, logger)
+	go queryDevice(deviceB, "DeviceB", "192.168.1.65:503", 1, 5*time.Second, logger)
 
 	select {}
 }
